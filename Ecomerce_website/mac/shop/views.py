@@ -43,17 +43,6 @@ def checkOut(request):
 # STEP 1 - GETTING TOTAL NO OF OBJECT INSIDE THE DIR AND MAKING CARD FOR THEM
 # STEP 2 - GETTING NAME OF THOSE IMAGES TO SEND TO HTML
 
-def slideMaker(request):
-    dirPath = "C:/Users/Ashok gupta/Desktop/DJANGO/Ecomerce_website/mac/media/shop/images"
-    dirName = os.listdir(dirPath)
-    for fileName in dirName:
-        print(fileName)
-
-def dataExtractor(request):
-    dirPath =  "C:/Users/Ashok gupta/Desktop/DJANGO/Ecomerce_website/mac/media/shop/images"
-    dirna =os.listdir(dirPath)
-    noImage = int(len(dirna)//4)+math.ceil(int(len(dirna))/4 - int(len(dirna))//4)
-    print(noImage)
 
 
 
