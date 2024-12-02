@@ -64,3 +64,18 @@ def registration_pro(scrim_id):
         a = str(response.status_code )
     
             
+def update_Data(request):
+     return render(request,'Scrim_Data.html')
+
+
+def AddData(request):
+    from Registration_soft.utils.UpdateData import AddNewData
+    AddNewData(request)
+    
+
+    return render(request, 'Scrim_Data.html')
+
+def AuthCheck(request):
+    from Registration_soft.utils.UpdateData import OneTimeData
+    OneTimeData(request)
+    return render(request,'auth_noti.html')

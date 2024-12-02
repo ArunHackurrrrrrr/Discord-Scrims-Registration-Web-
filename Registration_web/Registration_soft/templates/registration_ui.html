@@ -13,6 +13,7 @@ Scrims Registration
     {% block scrimreg %}
         <a class="nav-link active" aria-current="page" href="/registration">Scrim Registration</a>
     {% endblock %}
+    {% block perfpagae %} <a class="nav-link " aria-current="page" href="/perfmanage">Performace Manage</a>{%endblock%}
    
 
     <!-- Scrim Registration Form -->
@@ -28,14 +29,15 @@ Scrims Registration
                 </tr>
             </thead>
             <tbody>
-                {% for key, value in scrim_data.items %}
+             
+                 {% for scrim in scrim_data %}
                 <tr>
-                    <input type="hidden" name="{{ key }}" value="off">
+                    <input type="hidden" name="{{ scrim.ScrimsId }}" value="off">
                     <th scope="row">{{ forloop.counter }}</th>  <!-- Dynamically number the rows -->
-                    <td>{{ key }}</td>
-                    <td>{{ value.Time }}</td>
+                    <td>{{ scrim.ScrimsName }}</td>
+                    <td>{{ scrim.ScrimsId }}</td>
                     <td>
-                        <input class="form-check-input" name="{{ key }}" type="checkbox" value="on" id="firstCheckbox_{{ key }}">
+                        <input class="form-check-input" name="{{ scrim.ScrimsId }}" type="checkbox" value="on" id="{{ scrim.ScrimsId }}">
                     </td>
                 </tr>
                 {% endfor %}

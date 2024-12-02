@@ -1,5 +1,5 @@
 """
-URL configuration for Registration_soft project.
+URL configuration for RegisterationApp project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,14 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name= 'index'),
-    path('registration',views.registration, name='reigister'),
-    path('Register_scrim',views.registration_Starter, name='Register_scrim'),
-    path('UpdateData',views.update_Data, name='UpdateData'),
-    path('add-data/', views.AddData, name='AddData'),
-    path('AuthCheck', views.AuthCheck, name='AddData'),
 ]
