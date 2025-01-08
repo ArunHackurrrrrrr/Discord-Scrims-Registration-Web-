@@ -1,0 +1,115 @@
+{% extends 'basic.html' %}
+
+ {%block title%}
+ Performace Management
+ {%endblock%}
+
+{% block body %}
+{% block home %}<a class="nav-link " aria-current="page" href="/">Home</a> {%endblock%}
+{% block scrimreg %} <a class="nav-link" aria-current="page" href="/registration">Scrim Registration</a>{%endblock%}
+{% block perfpagae %} <a class="nav-link active" aria-current="page" href="/perfmanage">Performace Manage</a>{%endblock%}
+
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top: -100px;">
+    <div class="card p-4" style="width: 40rem;">
+        <h2 class="text-center mb-4"> {{ scrimData.ScrimDate }} </h2>
+
+        <!-- Form starts here -->
+        <form method="post" action="\addmatchdata">
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1" style="font-weight: bold;">POSITION</span>
+                <input type="text" name="position" class="form-control" placeholder="eg. 1 or" aria-label="Username" aria-describedby="basic-addon1" required>
+            </div>
+
+
+
+          <div class="mb-3">
+            <label for="basic-url" class="form-label">Your Team DC Tags..</label>
+
+          <div class="input-group mb-3" >
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                  <input class="form-check-input" name="userP1" type="checkbox" value="{{ plyData.UserPlayer1 }}" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                   {{ plyData.UserPlayer1 }}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp1" class="form-control" placeholder="KillsP1 1 DC Tag" aria-label="Username">
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                  <input class="form-check-input" name="userP2" type="checkbox" value="{{ plyData.UserPlayer2 }}" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{ plyData.UserPlayer2 }}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp2" class="form-control" placeholder="KillsP1 2 DC Tag" aria-label="Server">
+          </div>
+
+          <div class="input-group mb-3" >
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                  <input class="form-check-input" name="userP3" type="checkbox" value="{{ plyData.UserPlayer3}}" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{ plyData.UserPlayer3}}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp3" class="form-control" placeholder="KillsP1 3 DC Tag" aria-label="Username">
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                  <input class="form-check-input" name="userP4" type="checkbox" value="{{ plyData.UserPlayer4}}" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{ plyData.UserPlayer4}}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp4" class="form-control" placeholder="KillsP1 4 DC Tag" aria-label="Server">
+          </div>
+          {% if plyData.UserPlayer5 != "none" %}
+          <div class="input-group mb-3" >
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                  <input class="form-check-input" name="userP5" type="checkbox" value="{{ plyData.UserPlayer5}}" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{ plyData.UserPlayer5}}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp5" class="form-control" placeholder="KillsP1 3 DC Tag" aria-label="Username">
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                  <input class="form-check-input" name="userP6" type="checkbox" value="{{ plyData.UserPlayer6}}" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{ plyData.UserPlayer6}}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp6" class="form-control" placeholder="KillsP1 4 DC Tag" aria-label="Server">
+            </div>
+          </div>
+          {% endif %} 
+
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" style="font-weight: bold;">Your DC ID</span>
+            <input type="text" name="feedback" class="form-control" placeholder="Discord ID No." aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+
+            
+            <!-- <button type="submit" class="btn btn-primary btn-sm w-100 mt-3 ml-n3" >Add Scrim</button> -->
+            <button type="submit" class="btn btn-primary btn-sm w-100 mt-3 ml-n3" name="uid" value="{{uid}}">Add Scrim</button>
+
+
+        </form>
+        <!-- Form ends here -->
+    </div>    
+</div>
+
+
+
+
+{%endblock%}

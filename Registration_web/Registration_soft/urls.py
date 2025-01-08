@@ -24,6 +24,9 @@ urlpatterns = [
     path('Register_scrim',views.registration_Starter, name='Register_scrim'),
     path('UpdateData',views.update_Data, name='UpdateData'),
     path('add-data/', views.AddData, name='UpdateData'),
-    path('AuthCheck', views.AuthCheck, name='AddData'),
-    path('perfmanage', views.PerfManage, name='PerfManage')
+    path('AuthCheck', views.AuthCheck, name='AddDatas'),
+    path('perfmanage', views.PerfManage, name='PerfManage'),
+    path('AddData', views.perfIN, name='AddData'),
+    path('addmatchdata',views.matchData)
+
 ]

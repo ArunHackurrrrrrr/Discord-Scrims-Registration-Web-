@@ -10,15 +10,17 @@ class ScrimsData(models.Model):
     def __str__(self):
         return f"{self.ScrimsName} - {self.ScrimsTime}"     
 class PerfData(models.Model):
-    ScrimName = models.CharField(max_length=20)
-    ScrimTime = models.TimeField()
-    Scrimkill = models.PositiveIntegerField()
-    Scrimplacement = models.IntegerField()
-    ScrimDate = models.DateField()
-    ScrimReason = models.CharField(max_length=200)
+    ScrimUniqueId = models.CharField(max_length=15,default='none')
+    Scrimkillpoint = models.PositiveIntegerField()
+    Scrimplacementpoint = models.IntegerField()
+    ScrimReason = models.CharField(max_length=200,default='reason not given')
     ScrimTotalPoint = models.IntegerField()
+    killplayer1 = models.CharField(max_length=10,default='not played')
+    killplayer2 = models.CharField(max_length=10,default='not played')
+    killplayer3 = models.CharField(max_length=10,default='not played')
+    killplayer4 = models.CharField(max_length=10,default='not played')
     def __str__(self):
-        return f"{self.ScrimDate} - {self.ScrimTotalPoint}"     
+        return f"{self.Scrimkillpoint} - {self.ScrimTotalPoint}"     
     
 
 class OneTimeDatas(models.Model):
@@ -30,6 +32,8 @@ class OneTimeDatas(models.Model):
     UserPlayer2 = models.CharField(max_length=50)
     UserPlayer3 = models.CharField(max_length=50)
     UserPlayer4 = models.CharField(max_length=50)
+    UserPlayer5 = models.CharField(max_length=50,default='none')
+    UserPlayer6 = models.CharField(max_length=50,default='none')
 
     def __str__(self):
         return f"{self.UserName} - {self.UserTeam}"
@@ -39,3 +43,7 @@ class Auto_save_Data(models.Model):
     ScrimId = models.CharField(max_length=200)
     ScrimDate = models.DateField()
     ScrimTime = models.TimeField()
+    ScrimUniqueId = models.CharField(max_length=50,default='uniqueID')
+
+    def __str__(self):
+        return f"{self.ScrimName} - {self.ScrimDate}"
