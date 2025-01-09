@@ -1,5 +1,7 @@
 import requests
-def registration_pro(scrim_id):
+from datetime import datetime
+def registration_pro(msgtime,scrim_id):
+        current_time = datetime.now()
         url = f"https://discord.com/api/v9/channels/{scrim_id}/messages"
     
         headers = {
@@ -7,10 +9,28 @@ def registration_pro(scrim_id):
             "Content-Type": "application/json"
         }
 
-        msg = {
-            'content': 'TEAM NAME : SUGARx <@1117833918696128512> <@896979044837511188> <@1216632380815573035> <@745564134103318539> '
-        }
 
+        message_content = (
+        "TEAM NAME - DARK DYNASTY\n\n"
+        "**PLAYER DETAILS:**\n"
+        "PLAYER 1 IGN: DDxSouLsGOD \n PLAYER UID :- 55500148681\n\n"
+        "PLAYER 2 IGN: DDxCOPYCAT   \n PLAYER UID:- 55505309777\n\n"
+        "PLAYER 3 IGN: DDxARUN      \n PLAYER UID:- 55600311304\n\n"
+        "PLAYER 4 IGN: DVxZEUS      \n PLAYER UID:- 55514990741\n\n"
+        "Substitute: \n"
+        "Player 5 IGN: DDxSarkar    \n UID: 55539790333\n\n"
+        
+        "<@896979044837511188>\n"
+        "<@1117833918696128512>\n"
+        "<@975042201937657927>\n"
+        "<@691313191824785459>\n"
+        f"\n\nmsg time ={msgtime}"
+        )
+
+        # Build the payload
+        msg = {
+        "content": message_content
+        }
         response = requests.post(url, headers=headers, json=msg)
 
         print(response.status_code)

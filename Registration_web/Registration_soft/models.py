@@ -19,6 +19,12 @@ class PerfData(models.Model):
     killplayer2 = models.CharField(max_length=10,default='not played')
     killplayer3 = models.CharField(max_length=10,default='not played')
     killplayer4 = models.CharField(max_length=10,default='not played')
+    PlayerName1 = models.CharField(max_length=20,default='none')
+    PlayerName2 = models.CharField(max_length=20,default='none')
+    PlayerName3 = models.CharField(max_length=20,default='none')
+    PlayerName4 = models.CharField(max_length=20,default='none')
+
+
     def __str__(self):
         return f"{self.Scrimkillpoint} - {self.ScrimTotalPoint}"     
     

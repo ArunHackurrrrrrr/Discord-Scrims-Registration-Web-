@@ -17,7 +17,11 @@ def Performance_manage_in(data):
         Scrimkillpoint = data['killPoint'],
         ScrimTotalPoint = data['TP'],
         ScrimReason = data['feedback'],
-        ScrimUniqueId = data['uid']
+        ScrimUniqueId = data['uid'],
+        PlayerName1 = data['userPlayer1']['pname'],
+        PlayerName2 = data['userPlayer2']['pname'],
+        PlayerName3 = data['userPlayer3']['pname'],
+        PlayerName4 = data['userPlayer4']['pname']
     )
     Perfomance_data.save()
     from Registration_soft.models import Auto_save_Data

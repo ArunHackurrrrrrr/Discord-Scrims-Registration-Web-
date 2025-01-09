@@ -1,7 +1,7 @@
 import ast
 import time
 import requests
-import datetime
+import datetime 
 import threading
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -27,6 +27,7 @@ def registration_Starter(request):
         print(data.ScrimsId)
         
         if button_Stat == 'on':
+
             print('init')
             thread = threading.Thread(target=time_check,args=(data.ScrimsRegTime,data.ScrimsId))
             thread.start()
