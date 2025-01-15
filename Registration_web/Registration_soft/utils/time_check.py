@@ -47,6 +47,4 @@ def time_match(reg_Time, scrim_id):
             # print(f"Time {reg_Time} has already passed for scrim ID: {scrim_id}.")
             return  # Exit the thread if the time has passed
 
-        # Log waiting status and sleep
-        # print(f"Waiting for {reg_Time}... Current time: {current_time}")
-        time.sleep(0.1)  # Sleep for 0.1 seconds to reduce CPU usage
+        time.sleep(0.1)  
