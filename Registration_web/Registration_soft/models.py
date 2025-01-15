@@ -10,6 +10,9 @@ class ScrimsData(models.Model):
     def __str__(self):
         return f"{self.ScrimsName} - {self.ScrimsTime}"     
 class PerfData(models.Model):
+    ScrimName = models.CharField(max_length=20,default='not models')
+    ScrimPosition = models.CharField(max_length=10,default='#24')
+    ScrimDate = models.CharField(max_length=20,default='not found')
     ScrimUniqueId = models.CharField(max_length=15,default='none')
     Scrimkillpoint = models.PositiveIntegerField()
     Scrimplacementpoint = models.IntegerField()

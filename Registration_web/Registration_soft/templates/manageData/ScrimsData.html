@@ -1,0 +1,50 @@
+{% extends 'basic.html' %}
+
+ {%block title%}
+ Performace Management
+ {%endblock%}
+
+ {% block body %}
+ {% block home %}<a class="nav-link " aria-current="page" href="/">Home</a> {%endblock%}
+ {% block scrimreg %} <a class="nav-link" aria-current="page" href="/registration">Scrim Registration</a>{%endblock%}
+ {% block perfpagae %} <a class="nav-link active" aria-current="page" href="/perfmanage">Performace Manage</a>{%endblock%}
+
+
+
+ <form action="/SCDATAEDIT" method="post" style="padding-right: 20px;">
+    {% csrf_token %} 
+    <table class="table table-dark table-striped ">
+        <thead>
+            <tr>
+                <th scope="col">S.NO.</th>
+                <th scope="col">SCRIM NAME</th>
+                <th scope="col">DATE PLAYED</th>
+                <th scope="col">SCRIM TIME</th>
+                <th scope="col">ORGANISATION</th>
+                <!-- <th scope="col">            EDIT</th> -->
+            </tr>
+        </thead>
+        <tbody>
+         
+             {% for data in DEdata %}
+            <tr>
+                <input type="hidden" name="{{ scrim.ScrimsId }}" value="off">
+                <th scope="row">#{{ data.ScrimPosition }}</th>  <!-- Dynamically number the rows -->
+                <td>{{ data.ScrimsName }}</td>
+                <td>{{ data.ScrimDate }}</td>
+                <td>{{ data.ScrimsTime }}</td>
+                <td>{{ data.ScrimsOrg }}</td>
+                <td>
+                  
+                    <th scope="col"><button class="btn btn-primary" name='SDE' type="submit" value="{{data.ScrimsId}}">EDIT DATA</button></th>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    
+</form>
+ {%endblock%}

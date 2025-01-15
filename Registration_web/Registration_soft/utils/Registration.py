@@ -23,8 +23,8 @@ def registration_pro(msgtime,scrim_id):
         "<@896979044837511188>\n"
         "<@1117833918696128512>\n"
         "<@975042201937657927>\n"
-        "<@691313191824785459>\n"
-        f"\n\nmsg time ={msgtime}"
+        "<@691313191824785459>\n\n"
+        f"{msgtime}----> This is msg time , {current_time}------> This is current time , aur agar msg late aa raha hai to webhostmost ki ma ki choot"
         )
 
         # Build the payload

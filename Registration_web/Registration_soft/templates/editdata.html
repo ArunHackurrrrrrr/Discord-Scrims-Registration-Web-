@@ -1,0 +1,59 @@
+{% extends 'basic.html' %}
+
+{% block title %}
+Scrims Registration
+{% endblock %}
+
+
+{% block body %}
+{% block home %}<a class="nav-link " aria-current="page" href="/">Home</a> {%endblock%}
+{% block scrimreg %} <a class="nav-link" aria-current="page" href="/registration">Scrim Registration</a>{%endblock%}
+{% block perfpagae %} <a class="nav-link active" aria-current="page" href="/perfmanage">Performace Manage</a>{%endblock%}
+
+
+
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top: -100px;">
+    <div class="card p-4" style="width: 40rem;">
+        <h2 class="text-center mb-4">Add New Scrim</h2>
+
+        <!-- Form starts here -->
+        <form method="post" action="/delOReditData">
+            {% csrf_token %}
+
+          
+
+            <div class="mb-3">
+              <label for="basic-url" class="form-label">You can edit the following data..</label>
+
+              <div class="input-group mb-3">
+                  <div class="d-flex w-100 ms-3">
+                    <span class="input-group-text" style="font-weight: bold; ">Performance Data</span>
+                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1 me-2" name="PerformanceEdit" value="on">Edit Data</button>
+                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1" name="PerformaceDel"value="on">Delete Data</button>
+                </div>
+            </div>
+            
+
+            <div class="input-group mb-3">
+                <div class="d-flex w-100 ms-3">
+                  <span class="input-group-text" style="font-weight: bold; padding-right: 10%;">Scrims Data       </span>
+                  <button type="submit" class="btn btn-primary btn-sm flex-grow-1 me-2" name="ScrimsEdit"value="on" >Edit Data</button>
+                  <button type="submit" class="btn btn-primary btn-sm flex-grow-1" name="ScrimsDel"value="on">Delete Data</button>
+              </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="d-flex w-100 ms-3">
+              <span class="input-group-text" style="font-weight: bold; padding-right: 6%;">One TIme Data       </span>
+              <button type="submit" class="btn btn-primary btn-sm flex-grow-1 me-2" name="OneTimeEdit" value="on">Edit Data</button>
+              <button type="submit" class="btn btn-primary btn-sm flex-grow-1" name="OneTimeDel"value="on">Delete Data</button>
+          </div>
+      </div>
+
+
+        </form>
+        <!-- Form ends here -->
+    </div>
+</div>
+{%endblock%}

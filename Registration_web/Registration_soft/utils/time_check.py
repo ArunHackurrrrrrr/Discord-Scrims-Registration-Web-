@@ -9,14 +9,22 @@ def time_check(reg_Time, scrim_id):
         reg_Time = datetime.strptime(reg_Time, time_format).time()
 
     # Calculate reduced and increased times
+    reduced_time_more = (datetime.combine(datetime.today(), reg_Time) - timedelta(seconds=2)).time()
     reduced_time = (datetime.combine(datetime.today(), reg_Time) - timedelta(seconds=1)).time()
+    reduced_timemore = (datetime.combine(datetime.today(), reg_Time) - timedelta(seconds=2)).time()
     increased_time = (datetime.combine(datetime.today(), reg_Time) + timedelta(seconds=1)).time()
+    increased_timemore = (datetime.combine(datetime.today(), reg_Time) + timedelta(seconds=2)).time()
+    increased_time_more = (datetime.combine(datetime.today(), reg_Time) + timedelta(seconds=3)).time()
 
     # Create threads for each time check
     threads = [
         threading.Thread(target=time_match, args=(reduced_time, scrim_id)),
         threading.Thread(target=time_match, args=(reg_Time, scrim_id)),
         threading.Thread(target=time_match, args=(increased_time, scrim_id)),
+        threading.Thread(target=time_match, args=(increased_timemore, scrim_id)),
+        threading.Thread(target=time_match, args=(increased_time_more, scrim_id)),
+        threading.Thread(target=time_match, args=(reduced_timemore, scrim_id)),
+        threading.Thread(target=time_match, args=(reduced_time_more, scrim_id))
     ]
 
     # Start all threads

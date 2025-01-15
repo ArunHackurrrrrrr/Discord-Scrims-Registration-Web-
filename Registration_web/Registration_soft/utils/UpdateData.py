@@ -46,3 +46,5 @@ def OneTimeData(request):
 
         UserData.save()
 
+def delete_data(request):
+    pass

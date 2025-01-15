@@ -7,7 +7,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 i =0
 def index(request):
-    return render(request,'index.html')
+    from Registration_soft.models import PerfData
+    data = PerfData.objects.all()
+    print(data)
+    return render(request,'index.html',{"perfdata":data})
 def registration(request):
     from Registration_soft.models import ScrimsData
     scrim_data = ScrimsData.objects.all()
@@ -98,6 +101,7 @@ def matchData(request):
             full_data.update(name_kill)
             feedback = request.POST.get('feedback')
             position = request.POST.get('position')
+            positioninmatch = {'position':position}
             if user_P1 is not None :
                 user_P1=int(user_P1)
                 KP = user_P1 +KP
@@ -124,6 +128,7 @@ def matchData(request):
 
     TP = KP + pp
     TotlPoint = {'TP':f'{TP}'}
+    full_data.update(positioninmatch)
     full_data.update(addnote)
     full_data.update(killPoint)
     full_data.update(TotlPoint)
@@ -137,14 +142,77 @@ def matchData(request):
     Performance_manage_in(full_data)
     return HttpResponse('hlepp')
 
-#scrim_name,scrim_time,scrim_kill,scrim_place,scrim_date,scrim_reason,scrim_topo 
 
 
 
 
 
+def manage_Data(request):
+    return render(request,'editdata.html')
+    
+
+def manipulateData(request):
+    if request.method == "POST":
+        TaskPerfE = request.POST.get("PerformanceEdit")
+        TaskPerfD = request.POST.get("PerformaceDel")
+        TaskScrimsE = request.POST.get("ScrimsEdit")
+        TaskScrimsD = request.POST.get("ScrimsDel")
+        TaskOneTimeE = request.POST.get("OneTimeEdit")
+        TaskOneTimeD = request.POST.get("OneTimeDel")
+
+        if TaskPerfE =='on':
+            from Registration_soft.models import PerfData
+            dataPerf = PerfData.objects.all()
+            return render(request,'manageData/PerfDataEdit.html',{"code":'E',"DEdata":dataPerf})
+        if TaskPerfD =='on':
+            from Registration_soft.models import PerfData
+            dataPerf = PerfData.objects.all()
+            return render(request,'manageData/PerfDataDel.html',{"code":'D',"DEdata":dataPerf})
+        if TaskScrimsE =='on':
+            from Registration_soft.models import ScrimsData
+            dataScrim = ScrimsData.objects.all()
+            return render(request,'manageData/ScrimsData.html',{"code":'E',"DEdata":dataScrim})
+        if TaskScrimsD =='on':
+            from Registration_soft.models import ScrimsData
+            dataScrim = ScrimsData.objects.all()
+            return render(request,'manageData/ScrimsDataDel.html',{"code":'D',"DEdata":dataScrim})
+        if TaskOneTimeE =='on':
+            from Registration_soft.models import OneTimeDatas
+            dataOneData = OneTimeDatas.objects.all()
+            return render(request,'manageData/manage_old_data.html',{"code":'E',"DEdata":dataOneData})
+        if TaskOneTimeD =='on':
+            from Registration_soft.models import OneTimeDatas
+            dataOneData = OneTimeDatas.objects.all()
+            return render(request,'manageData/manage_old_data.html',{"code":'D',"DEdata":dataOneData})
+  
 
 
+def deData(request):
+    if request.method =='POST':
+        scrimId = request.POST.get('DEE')
+        from Registration_soft.utils.datamanage import perfdata
+        dataUid = perfdata(scrimId)
+        return render(request,'manageData/datamanage/PerfDatamanipulate.html',{"datascid":dataUid})
+def delData(request):
+    if request.method == 'POST':
+        scrimId = request.POST.get('DEL')
+        from Registration_soft.utils.datamanage import delData
+        delData(scrimId)
+        from Registration_soft.models import PerfData
+        dataPerf= PerfData.objects.all()
+        return render(request,'manageData/PerfDataDel.html',{"code":'D',"DEdata":dataPerf})
 
-
-
+def deScrimsData(request):
+    if request.method == 'POST':
+        scrimId = request.POST.get('SDE')
+        from Registration_soft.utils.datamanage import scrimsData
+        dataScrims = scrimsData(scrimId)
+        return render(request,'manageData/datamanage/ScrimsDatamanipulate.html',{"scrimsData":dataScrims})
+def delScrimsData(request):
+    if request.method == 'POST':
+        scrimId = request.POST.get('SDEL')
+    from Registration_soft.utils.datamanage import delScrimData
+    delScrimData(scrimId)
+    from Registration_soft.models import ScrimsData
+    dataScrim = ScrimsData.objects.all()
+    return render(request,'manageData/ScrimsDataDel.html',{"DEdata":dataScrim})

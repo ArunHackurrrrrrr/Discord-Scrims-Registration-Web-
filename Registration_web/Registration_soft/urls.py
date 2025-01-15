@@ -27,6 +27,12 @@ urlpatterns = [
     path('AuthCheck', views.AuthCheck, name='AddDatas'),
     path('perfmanage', views.PerfManage, name='PerfManage'),
     path('AddData', views.perfIN, name='AddData'),
-    path('addmatchdata',views.matchData)
+    path('addmatchdata',views.matchData),
+    path('managedata',views.manage_Data),
+    path('delOReditData',views.manipulateData),
+    path('DEDATA',views.deData),
+    path('DELDATA',views.delData),
+    path('SCDATAEDIT',views.deScrimsData),
+    path('SCDATADEL',views.delScrimsData)
 
 ]

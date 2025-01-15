@@ -1,0 +1,86 @@
+{% extends 'basic.html' %}
+
+ {%block title%}
+ Performace Management
+ {%endblock%}
+
+{% block body %}
+{% block home %}<a class="nav-link " aria-current="page" href="/">Home</a> {%endblock%}
+{% block scrimreg %} <a class="nav-link" aria-current="page" href="/registration">Scrim Registration</a>{%endblock%}
+{% block perfpagae %} <a class="nav-link active" aria-current="page" href="/perfmanage">Performace Manage</a>{%endblock%}
+
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top: -100px;">
+    <div class="card p-4" style="width: 40rem;">
+        <h2 class="text-center mb-4">{{datascid.ScrimName}} | {{ datascid.ScrimDate }} </h2>
+        <h4>TOTAL POINT -> {{ datascid.ScrimTotalPoint }}</h4>
+
+        <!-- Form starts here -->
+        <form method="post" action="\addmatchdata">
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1" style="font-weight: bold;">POSITION</span>
+                <input type="text" name="position" class="form-control" placeholder="eg. 1 or" aria-label="Username" aria-describedby="basic-addon1" required value="{{datascid.ScrimPosition}}">
+            </div>
+
+
+
+          <div class="mb-3">
+            <label for="basic-url" class="form-label">Your Team Kills</label>
+
+          <div class="input-group mb-3" >
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                   {{ datascid.PlayerName1 }}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp1" class="form-control" placeholder="KillsP1 1 DC Tag" aria-label="Username" value="{{datascid.killplayer1}}">
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+
+                    {{ datascid.PlayerName2 }}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp2" class="form-control" placeholder="KillsP1 2 DC Tag" aria-label="Server" value="{{ datascid.killplayer2 }}">
+          </div>
+
+          <div class="input-group mb-3" >
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                    {{ datascid.PlayerName3 }}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp3" class="form-control" placeholder="KillsP1 3 DC Tag" aria-label="Username" value="{{ datascid.killplayer3 }}">
+              <span class="input-group-text" style="font-weight: bold;">
+                <div class="form-check">
+                    {{ datascid.PlayerName4 }}
+                  </label>
+                </div>
+              </span>
+              <input type="text" name="killsp4" class="form-control" placeholder="KillsP1 4 DC Tag" aria-label="Server" value="{{ datascid.killplayer4 }}">
+          </div>
+
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" style="font-weight: bold;">Mistakes</span>
+            <input type="text" name="feedback" class="form-control" placeholder="Discord ID No." aria-label="Username" aria-describedby="basic-addon1" required value="{{datascid.ScrimReason}}">
+        </div>
+
+            
+            <!-- <button type="submit" class="btn btn-primary btn-sm w-100 mt-3 ml-n3" >Add Scrim</button> -->
+            <button type="submit" class="btn btn-primary btn-sm w-100 mt-3 ml-n3" name="uid" value="{{uid}}">UPDATE</button>
+
+
+        </form>
+        <!-- Form ends here -->
+    </div>    
+</div>
+
+
+
+
+{%endblock%}

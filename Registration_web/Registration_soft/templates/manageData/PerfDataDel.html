@@ -1,0 +1,52 @@
+{% extends 'basic.html' %}
+
+ {%block title%}
+ Performace Management
+ {%endblock%}
+
+ {% block body %}
+ {% block home %}<a class="nav-link " aria-current="page" href="/">Home</a> {%endblock%}
+ {% block scrimreg %} <a class="nav-link" aria-current="page" href="/registration">Scrim Registration</a>{%endblock%}
+ {% block perfpagae %} <a class="nav-link active" aria-current="page" href="/perfmanage">Performace Manage</a>{%endblock%}
+
+
+
+ <form action="/DELDATA" method="post" style="padding-right: 20px;">
+    {% csrf_token %} 
+    <table class="table table-dark table-striped ">
+        <thead>
+            <tr>
+                <th scope="col">#POSITION</th>
+                <th scope="col">SCRIM NAME</th>
+                <th scope="col">DATE PLAYED</th>
+                <th scope="col">PLACEMENT POINTS</th>
+                <th scope="col">KILL POINTS</th>
+                <th scope="col">TOTAL POINT</th>
+                <!-- <th scope="col">            EDIT</th> -->
+            </tr>
+        </thead>
+        <tbody>
+         
+             {% for data in DEdata %}
+            <tr>
+                <input type="hidden" name="{{ scrim.ScrimsId }}" value="off">
+                <th scope="row">#{{ data.ScrimPosition }}</th>  <!-- Dynamically number the rows -->
+                <td>{{ data.ScrimName }}</td>
+                <td>{{ data.ScrimDate }}</td>
+                <td>{{ data.Scrimplacementpoint }}</td>
+                <td>{{ data.Scrimkillpoint }}</td>
+                <td>{{ data.ScrimTotalPoint }}</td>
+                <td>
+                  
+                    <th scope="col"><button class="btn btn-primary" name='DEL' type="submit" value="{{data.ScrimUniqueId}}">DELETE DATA</button></th>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    
+</form>
+ {%endblock%}
