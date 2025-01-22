@@ -1,11 +1,43 @@
 import ast
 import time
 import requests
-import datetime 
+from datetime import datetime
 import threading
 from django.http import HttpResponse
 from django.shortcuts import render
 i =0
+def loginPage(request):
+    flag = True
+    return render(request,'login_signup.html')
+def SignUpPage(request):
+    return render(request,'SignUp.html')
+def SignUp(request):
+    from Registration_soft.utils.signUP_Login import SignUp
+    uname =request.POST.get('USERNAME')
+    upass =request.POST.get('PASSWORD')
+    userExist = SignUp(uname,upass)
+    return render(request,'SignUp.html',{"userExist":userExist,"time":datetime.now()})
+            
+def login(request):
+    alert = False    
+    if request.method == 'POST':
+        from django.contrib.auth.hashers import check_password
+        from Registration_soft.models import userLogin
+        uname =request.POST.get('USERNAME')
+        upass =request.POST.get('PASSWORD')
+        try:
+            userLogData = userLogin.objects.get(username = f'{uname}')
+            passMatch = check_password(upass,userLogData.userpass)
+            if passMatch is True:
+                from Registration_soft.models import PerfData
+                data = PerfData.objects.filter()
+                return render(request,'index.html',{"perfdata":data})
+        except Exception as e:
+            print(e)
+            flag = True
+            return render(request,'login_signup.html',{"alerts":flag,"time":datetime.now()})
+            
+        
 def index(request):
     from Registration_soft.models import PerfData
     data = PerfData.objects.all()

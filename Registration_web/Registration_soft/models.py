@@ -1,6 +1,7 @@
 from django.db import models
 
 class ScrimsData(models.Model):
+    UserUniqueId = models.CharField(max_length=500,default='not given')
     ScrimsName = models.CharField(max_length=20)
     ScrimsTime = models.TimeField()
     ScrimsRegTime = models.TimeField()
@@ -10,6 +11,7 @@ class ScrimsData(models.Model):
     def __str__(self):
         return f"{self.ScrimsName} - {self.ScrimsTime}"     
 class PerfData(models.Model):
+    UserUniqueId = models.CharField(max_length=500,default='not given')
     ScrimName = models.CharField(max_length=20,default='not models')
     ScrimPosition = models.CharField(max_length=10,default='#24')
     ScrimDate = models.CharField(max_length=20,default='not found')
@@ -33,6 +35,7 @@ class PerfData(models.Model):
     
 
 class OneTimeDatas(models.Model):
+    UserUniqueId = models.CharField(max_length=500,default='not given')
     UserAuth = models.CharField(max_length=200)
     UserName = models.CharField(max_length=20)
     UserTeam = models.CharField(max_length=20)
@@ -48,6 +51,7 @@ class OneTimeDatas(models.Model):
         return f"{self.UserName} - {self.UserTeam}"
 
 class Auto_save_Data(models.Model):
+    userUniqueId = models.CharField(max_length=500,default='not given')
     ScrimName = models.CharField(max_length=20)
     ScrimId = models.CharField(max_length=200)
     ScrimDate = models.DateField()
@@ -56,3 +60,8 @@ class Auto_save_Data(models.Model):
 
     def __str__(self):
         return f"{self.ScrimName} - {self.ScrimDate}"
+
+class userLogin(models.Model):
+    userUniqueId = models.CharField(max_length=500,default='not given')
+    username = models.CharField(max_length=50, default='not_given')
+    userpass = models.CharField(max_length=100, default='not_given')

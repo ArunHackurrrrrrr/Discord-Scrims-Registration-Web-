@@ -25,7 +25,7 @@ def time_check(reg_Time, scrim_id):
         threading.Thread(target=time_match, args=(increased_time_more, scrim_id)),
         threading.Thread(target=time_match, args=(reduced_timemore, scrim_id)),
         threading.Thread(target=time_match, args=(reduced_time_more, scrim_id))
-        #git push
+
     ]
 
     # Start all threads

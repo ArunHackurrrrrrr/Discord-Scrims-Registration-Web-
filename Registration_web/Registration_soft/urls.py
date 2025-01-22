@@ -19,7 +19,7 @@ from django.urls import path
 from Registration_soft import views
 
 urlpatterns = [
-    path('', views.index, name= 'index'),
+    path('home', views.index, name= 'index'),
     path('registration',views.registration, name='reigister'),
     path('Register_scrim',views.registration_Starter, name='Register_scrim'),
     path('UpdateData',views.update_Data, name='UpdateData'),
@@ -33,6 +33,10 @@ urlpatterns = [
     path('DEDATA',views.deData),
     path('DELDATA',views.delData),
     path('SCDATAEDIT',views.deScrimsData),
-    path('SCDATADEL',views.delScrimsData)
+    path('SCDATADEL',views.delScrimsData),
+    path('',views.loginPage),
+    path('login', views.login),
+    path('SignUpPage', views.SignUpPage),
+    path('SignUp',views.SignUp)
 
 ]
