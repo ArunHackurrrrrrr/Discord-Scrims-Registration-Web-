@@ -11,7 +11,7 @@ def SignUp(name,password):
         make_New_User = userLogin(
             username = name,
             userpass = hashPass,
-            userUniqueId = userUID
+            UserUniqueId = userUID
         )
         make_New_User.save()
         return 'created'

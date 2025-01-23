@@ -1,4 +1,4 @@
-def AddNewData(request):
+def AddNewData(request,uid):
     if request.method == "POST":
         discord_id = request.POST.get('discord_id')
         scrim_name = request.POST.get('scrim_name')
@@ -6,6 +6,7 @@ def AddNewData(request):
         registration_time = request.POST.get('registration_time')
         start_time = request.POST.get('start_time')
         start_date = request.POST.get('scrim_date')
+
         
         from Registration_soft.models import ScrimsData
 
@@ -15,12 +16,14 @@ def AddNewData(request):
             ScrimsRegTime = registration_time,
             ScrimsId = discord_id,
             ScrimsOrg = org_name,
-            ScrimsDate = start_date
+            ScrimsDate = start_date,
+            UserUniqueId = uid
         )
         ScrimDAtaUser.save()
+        print(uid,'ye hia')
 
 
-def OneTimeData(request):
+def OneTimeData(request,uid):
     if request.method == "POST":
         user_id = request.POST.get('discord_id')
         user_name = request.POST.get('User_Name')
@@ -42,9 +45,11 @@ def OneTimeData(request):
             UserPlayer2 = user_P2,
             UserPlayer3 = user_P3,
             UserPlayer4 = user_P4,
+            UserUniqueId =uid
         )
 
         UserData.save()
+        print(uid,'data is being saved')
 
 def delete_data(request):
     pass

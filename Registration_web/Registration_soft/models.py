@@ -51,7 +51,7 @@ class OneTimeDatas(models.Model):
         return f"{self.UserName} - {self.UserTeam}"
 
 class Auto_save_Data(models.Model):
-    userUniqueId = models.CharField(max_length=500,default='not given')
+    UserUniqueId = models.CharField(max_length=500,default='not given')
     ScrimName = models.CharField(max_length=20)
     ScrimId = models.CharField(max_length=200)
     ScrimDate = models.DateField()
@@ -62,6 +62,6 @@ class Auto_save_Data(models.Model):
         return f"{self.ScrimName} - {self.ScrimDate}"
 
 class userLogin(models.Model):
-    userUniqueId = models.CharField(max_length=500,default='not given')
+    UserUniqueId = models.CharField(max_length=500,default='not given')
     username = models.CharField(max_length=50, default='not_given')
     userpass = models.CharField(max_length=100, default='not_given')

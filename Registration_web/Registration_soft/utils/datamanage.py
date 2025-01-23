@@ -1,16 +1,17 @@
-def perfdata(uid):
+def perfdata(uid,userid):
     from Registration_soft.models import PerfData
-    data = PerfData.objects.get(ScrimUniqueId = uid)
+    data = PerfData.objects.filter(UserUniqueId = userid).get(ScrimUniqueId = uid)
     return data
 
-def delData(uid):
+def delData(uid,userid):
     from Registration_soft.models import PerfData
-    PerfData.objects.get(ScrimUniqueId = uid).delete()
+    PerfData.objects.filter(UserUniqueId = userid).get(ScrimUniqueId = uid).delete()
 
-def scrimsData(uid):
+def scrimsData(uid,userid):
     from Registration_soft.models import ScrimsData
-    data = ScrimsData.objects.get(ScrimsId = uid)
+    data = ScrimsData.objects.filter(UserUniqueId = userid).get(ScrimsId = uid)
     return data
-def delScrimData(uid):
+def delScrimData(uid,userid):
     from Registration_soft.models import ScrimsData
-    ScrimsData.objects.get(ScrimsId = uid).delete()
+    ScrimsData.objects.filter(UserUniqueId = userid).get(ScrimsId = uid).delete()
+    

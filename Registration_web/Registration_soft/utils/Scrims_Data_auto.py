@@ -1,4 +1,4 @@
-def auto_data(Scrim_Name,Scrim_Id,Scrim_Time):
+def auto_data(Scrim_Name,Scrim_Id,Scrim_Time,useruid):
     from Registration_soft.models import Auto_save_Data
     from datetime import date
     from datetime import datetime
@@ -11,11 +11,12 @@ def auto_data(Scrim_Name,Scrim_Id,Scrim_Time):
         ScrimId = Scrim_Id,
         ScrimDate = Scrim_Date,
         ScrimTime = Scrim_Time,
-        ScrimUniqueId = uniqueId
+        ScrimUniqueId = uniqueId,
+        UserUniqueId = useruid
     
     )
 
-    print(uniqueId,'uid from scrimdataauto')
+    print(uniqueId,useruid,'uid from scrimdataauto')
 
 
     AutoSaveData.save()

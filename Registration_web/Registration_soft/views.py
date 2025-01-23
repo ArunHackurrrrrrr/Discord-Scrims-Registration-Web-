@@ -22,16 +22,20 @@ def login(request):
     alert = False    
     if request.method == 'POST':
         from django.contrib.auth.hashers import check_password
+        from django.contrib.auth.hashers import make_password
         from Registration_soft.models import userLogin
         uname =request.POST.get('USERNAME')
         upass =request.POST.get('PASSWORD')
+        passhash = make_password(f'{upass}')
+        uid= f'{uname}{upass}'
         try:
             userLogData = userLogin.objects.get(username = f'{uname}')
             passMatch = check_password(upass,userLogData.userpass)
+            request.session['uid'] = uid
             if passMatch is True:
                 from Registration_soft.models import PerfData
-                data = PerfData.objects.filter()
-                return render(request,'index.html',{"perfdata":data})
+                data = PerfData.objects.filter(UserUniqueId = uid).first()
+                return render(request,'index.html',{"perfdata":data,"uid":uid})
         except Exception as e:
             print(e)
             flag = True
@@ -40,40 +44,50 @@ def login(request):
         
 def index(request):
     from Registration_soft.models import PerfData
-    data = PerfData.objects.all()
-    print(data)
+    uid = request.session.get('uid')
+    try:
+        data = PerfData.objects.filter(UserUniqueId = f'{uid}')
+        print(uid)
+    except Exception as e:
+        data = e
     return render(request,'index.html',{"perfdata":data})
 def registration(request):
+
+    uid = request.session.get('uid')
     from Registration_soft.models import ScrimsData
-    scrim_data = ScrimsData.objects.all()
+    try:
+        scrim_data = ScrimsData.objects.filter(UserUniqueId = uid)
+    except Exception as e:
+        scrim_data = e
     return render(request,'registration_ui.html',{"scrim_data": scrim_data})
 
 
 def registration_Starter(request):
     from Registration_soft.utils.time_check import time_check
     from Registration_soft.models import ScrimsData
-   
+    uid = request.session.get('uid')
     print('infun')
     scrims = {}
-    scrims_data = ScrimsData.objects.all()
+    try:
+        scrims_data = ScrimsData.objects.filter(UserUniqueId = uid)
 
-    for data in scrims_data:
-        button_Stat = request.POST.get(f'{data.ScrimsId}','off')
-        print(data.ScrimsId)
-        
-        if button_Stat == 'on':
+        for data in scrims_data:
+            button_Stat = request.POST.get(f'{data.ScrimsId}','off')
+            print(data.ScrimsId)
 
-            print('init')
-            thread = threading.Thread(target=time_check,args=(data.ScrimsRegTime,data.ScrimsId))
-            thread.start()
-            scrims.update({ f'{data.ScrimsName}': f'{data.ScrimsTime}'})
-            
-            from Registration_soft.utils.Scrims_Data_auto import auto_data
+            if button_Stat == 'on':
 
-            auto_data(data.ScrimsName,data.ScrimsId,data.ScrimsTime)
-            
+                print('init')
+                thread = threading.Thread(target=time_check,args=(data.ScrimsRegTime,data.ScrimsId))
+                thread.start()
+                scrims.update({ f'{data.ScrimsName}': f'{data.ScrimsTime}'})
 
-    print(scrims.keys())
+                from Registration_soft.utils.Scrims_Data_auto import auto_data
+
+                auto_data(data.ScrimsName,data.ScrimsId,data.ScrimsTime,uid)
+                print(scrims.keys())
+    except Exception as e:
+        scrims = e
     return render(request,'registering.html',{"scrims":scrims})
 
     
@@ -84,35 +98,59 @@ def update_Data(request):
 
 def AddData(request):
     from Registration_soft.utils.UpdateData import AddNewData
-    AddNewData(request)
-    
-
+    uid = request.session.get('uid')
+    AddNewData(request,uid)
     return render(request, 'Scrim_Data.html')
 
 def AuthCheck(request):
     from Registration_soft.utils.UpdateData import OneTimeData
-    OneTimeData(request)
+    uid = request.session.get('uid')
+    OneTimeData(request,uid)
     return render(request,'auth_noti.html')
 
 def PerfManage(request):
     from Registration_soft.models import Auto_save_Data
-    data = Auto_save_Data.objects.all()
+    uid = request.session.get('uid')
+    try:
+        data = Auto_save_Data.objects.filter(UserUniqueId = uid)
+    except Exception as e:
+        data = e
     return render(request, 'performance.html',{"PerfData":data})
 
+# def perfIN(request):
+#     if request.method == 'POST':
+#         btnID = request.POST.get('action')
+#         from Registration_soft.models import Auto_save_Data
+#         from Registration_soft.models import OneTimeDatas 
+#         uid = request.session.get('uid')
+#         pdata = OneTimeDatas.objects.filter(UserUniqueId = uid)
+#         print(btnID)
+#         # data = Auto_save_Data.objects.get(ScrimUniqueId = f'{btnID}')
+#         data = Auto_save_Data.objects.filter(UserUniqueId = uid).get(ScrimUniqueId = f'{btnID}')
+#         datas = {'scrimData':f'{data}'}
+#         print(datas)
+#         print(data.ScrimDate)
+        
+
+        
+#     return render(request,'addperfdata.html',{"scrimData":data,"plyData":pdata,"uid":btnID})
+
+
 def perfIN(request):
+    uid = request.session.get('uid')
     if request.method == 'POST':
         btnID = request.POST.get('action')
         from Registration_soft.models import Auto_save_Data
-        from Registration_soft.models import OneTimeDatas 
-        pdata = OneTimeDatas.objects.all().first()
-        print(btnID)
-        data = Auto_save_Data.objects.get(ScrimUniqueId = f'{btnID}')
-        datas = {'scrimData':f'{data}'}
-        print(datas)
-        print(data.ScrimDate)
+        from Registration_soft.models import OneTimeDatas
+        try:
+            plData = OneTimeDatas.objects.get(UserUniqueId = uid)
+            scData = Auto_save_Data.objects.filter(UserUniqueId = uid).get(ScrimUniqueId = f'{btnID}')
+            print(scData,plData)
+        except Exception as e:
+            scData = e
+    return render(request,'addperfdata.html',{"scrimData":scData,"plyData":plData,"uid":btnID})
 
-        
-    return render(request,'addperfdata.html',{"scrimData":data,"plyData":pdata,"uid":btnID})
+
 
 def matchData(request):
     full_data = {}
@@ -166,17 +204,13 @@ def matchData(request):
     full_data.update(TotlPoint)
     full_data.update(plpoint)
     full_data.update(unique_id)
-
+    uuid = request.session.get('uid')
     for no in range(1,7):
         if full_data[f'userPlayer{no}']['pname'] == 'off':
             full_data.pop(f'userPlayer{no}')
     print('the full data is',full_data)
-    Performance_manage_in(full_data)
-    return HttpResponse('hlepp')
-
-
-
-
+    Performance_manage_in(full_data,uuid)
+    return HttpResponse('hlepp',uuid)
 
 
 def manage_Data(request):
@@ -191,60 +225,79 @@ def manipulateData(request):
         TaskScrimsD = request.POST.get("ScrimsDel")
         TaskOneTimeE = request.POST.get("OneTimeEdit")
         TaskOneTimeD = request.POST.get("OneTimeDel")
-
-        if TaskPerfE =='on':
-            from Registration_soft.models import PerfData
-            dataPerf = PerfData.objects.all()
-            return render(request,'manageData/PerfDataEdit.html',{"code":'E',"DEdata":dataPerf})
-        if TaskPerfD =='on':
-            from Registration_soft.models import PerfData
-            dataPerf = PerfData.objects.all()
-            return render(request,'manageData/PerfDataDel.html',{"code":'D',"DEdata":dataPerf})
-        if TaskScrimsE =='on':
-            from Registration_soft.models import ScrimsData
-            dataScrim = ScrimsData.objects.all()
-            return render(request,'manageData/ScrimsData.html',{"code":'E',"DEdata":dataScrim})
-        if TaskScrimsD =='on':
-            from Registration_soft.models import ScrimsData
-            dataScrim = ScrimsData.objects.all()
-            return render(request,'manageData/ScrimsDataDel.html',{"code":'D',"DEdata":dataScrim})
-        if TaskOneTimeE =='on':
-            from Registration_soft.models import OneTimeDatas
-            dataOneData = OneTimeDatas.objects.all()
-            return render(request,'manageData/manage_old_data.html',{"code":'E',"DEdata":dataOneData})
-        if TaskOneTimeD =='on':
-            from Registration_soft.models import OneTimeDatas
-            dataOneData = OneTimeDatas.objects.all()
-            return render(request,'manageData/manage_old_data.html',{"code":'D',"DEdata":dataOneData})
+        useruid = request.session.get('uid')
+        try:
+            if TaskPerfE =='on':
+                from Registration_soft.models import PerfData
+                dataPerf = PerfData.objects.filter(UserUniqueId = useruid)
+                return render(request,'manageData/PerfDataEdit.html',{"code":'E',"DEdata":dataPerf})
+            if TaskPerfD =='on':
+                from Registration_soft.models import PerfData
+                dataPerf = PerfData.objects.filter(UserUniqueId = useruid)
+                return render(request,'manageData/PerfDataDel.html',{"code":'D',"DEdata":dataPerf})
+            if TaskScrimsE =='on':
+                from Registration_soft.models import ScrimsData
+                dataScrim = ScrimsData.objects.filter(UserUniqueId = useruid)
+                return render(request,'manageData/ScrimsData.html',{"code":'E',"DEdata":dataScrim})
+            if TaskScrimsD =='on':
+                from Registration_soft.models import ScrimsData
+                dataScrim = ScrimsData.objects.filter(UserUniqueId = useruid)
+                return render(request,'manageData/ScrimsDataDel.html',{"code":'D',"DEdata":dataScrim})
+            if TaskOneTimeE =='on':
+                from Registration_soft.models import OneTimeDatas
+                dataOneData = OneTimeDatas.objects.filter(UserUniqueId = useruid)
+                return render(request,'manageData/manage_old_data.html',{"code":'E',"DEdata":dataOneData})
+            if TaskOneTimeD =='on':
+                from Registration_soft.models import OneTimeDatas
+                dataOneData = OneTimeDatas.objects.filter(UserUniqueId = useruid)
+                return render(request,'manageData/manage_old_data.html',{"code":'D',"DEdata":dataOneData})
+        except Exception as e:
+            return HttpResponse(f'the error is {e}')
   
 
 
 def deData(request):
-    if request.method =='POST':
-        scrimId = request.POST.get('DEE')
-        from Registration_soft.utils.datamanage import perfdata
-        dataUid = perfdata(scrimId)
-        return render(request,'manageData/datamanage/PerfDatamanipulate.html',{"datascid":dataUid})
+    try:
+        if request.method =='POST':
+            scrimId = request.POST.get('DEE')
+            uid = request.session.get('uid')
+            from Registration_soft.utils.datamanage import perfdata
+            dataUid = perfdata(scrimId,uid)
+            return render(request,'manageData/datamanage/PerfDatamanipulate.html',{"datascid":dataUid})
+    except Exception as e:
+        return HttpResponse(f'the error is {e}')
 def delData(request):
-    if request.method == 'POST':
-        scrimId = request.POST.get('DEL')
-        from Registration_soft.utils.datamanage import delData
-        delData(scrimId)
-        from Registration_soft.models import PerfData
-        dataPerf= PerfData.objects.all()
-        return render(request,'manageData/PerfDataDel.html',{"code":'D',"DEdata":dataPerf})
-
+    try:
+        if request.method == 'POST':
+            scrimId = request.POST.get('DEL')
+            from Registration_soft.utils.datamanage import delData
+            uid = request.session.get('uid')
+            delData(scrimId,uid)
+            from Registration_soft.models import PerfData
+            uid = request.session.get('uid')
+            dataPerf= PerfData.objects.filter(UserUniqueId = uid).all()
+            return render(request,'manageData/PerfDataDel.html',{"code":'D',"DEdata":dataPerf})
+    except Exception as e:
+        return HttpResponse(f'the error is {e}')
 def deScrimsData(request):
-    if request.method == 'POST':
-        scrimId = request.POST.get('SDE')
-        from Registration_soft.utils.datamanage import scrimsData
-        dataScrims = scrimsData(scrimId)
-        return render(request,'manageData/datamanage/ScrimsDatamanipulate.html',{"scrimsData":dataScrims})
+    try:
+        if request.method == 'POST':
+            scrimId = request.POST.get('SDE')
+            from Registration_soft.utils.datamanage import scrimsData
+            uid = request.session.get('uid')
+            dataScrims = scrimsData(scrimId,uid)
+            return render(request,'manageData/datamanage/ScrimsDatamanipulate.html',{"scrimsData":dataScrims})
+    except Exception as e:
+        return HttpResponse(f'the error is {e}')
 def delScrimsData(request):
-    if request.method == 'POST':
-        scrimId = request.POST.get('SDEL')
-    from Registration_soft.utils.datamanage import delScrimData
-    delScrimData(scrimId)
-    from Registration_soft.models import ScrimsData
-    dataScrim = ScrimsData.objects.all()
-    return render(request,'manageData/ScrimsDataDel.html',{"DEdata":dataScrim})
+    try:
+        if request.method == 'POST':
+            scrimId = request.POST.get('SDEL')
+        from Registration_soft.utils.datamanage import delScrimData
+        uid = request.session.get('uid')
+        delScrimData(scrimId,uid)
+        from Registration_soft.models import ScrimsData
+        dataScrim = ScrimsData.objects.all()
+        return render(request,'manageData/ScrimsDataDel.html',{"DEdata":dataScrim})
+    except Exception as e:
+        return HttpResponse(f'the error is {e}')
