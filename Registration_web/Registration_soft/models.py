@@ -2,6 +2,7 @@ from django.db import models
 
 class ScrimsData(models.Model):
     UserUniqueId = models.CharField(max_length=500,default='not given')
+    ScrimsUid = models.CharField(max_length=50,default='not given')
     ScrimsName = models.CharField(max_length=20)
     ScrimsTime = models.TimeField()
     ScrimsRegTime = models.TimeField()

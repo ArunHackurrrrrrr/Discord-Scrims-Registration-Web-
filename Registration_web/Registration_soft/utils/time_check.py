@@ -2,7 +2,9 @@ from datetime import datetime, timedelta
 import time
 import threading
 
-def time_check(reg_Time, scrim_id):
+def time_check(data,uid):
+    scrim_id = data.ScrimsId
+    reg_Time = data.ScrimsRegTime
     # Ensure `reg_Time` is in datetime.time format
     if isinstance(reg_Time, str):
         time_format = "%H:%M:%S"
@@ -18,13 +20,13 @@ def time_check(reg_Time, scrim_id):
 
     # Create threads for each time check
     threads = [
-        threading.Thread(target=time_match, args=(reduced_time, scrim_id)),
-        threading.Thread(target=time_match, args=(reg_Time, scrim_id)),
-        threading.Thread(target=time_match, args=(increased_time, scrim_id)),
-        threading.Thread(target=time_match, args=(increased_timemore, scrim_id)),
-        threading.Thread(target=time_match, args=(increased_time_more, scrim_id)),
-        threading.Thread(target=time_match, args=(reduced_timemore, scrim_id)),
-        threading.Thread(target=time_match, args=(reduced_time_more, scrim_id))
+        threading.Thread(target=time_match, args=(reduced_time, scrim_id,uid)),
+        threading.Thread(target=time_match, args=(reg_Time, scrim_id,uid)),
+        threading.Thread(target=time_match, args=(increased_time, scrim_id,uid)),
+        threading.Thread(target=time_match, args=(increased_timemore, scrim_id,uid)),
+        threading.Thread(target=time_match, args=(increased_time_more, scrim_id,uid)),
+        threading.Thread(target=time_match, args=(reduced_timemore, scrim_id,uid)),
+        threading.Thread(target=time_match, args=(reduced_time_more, scrim_id,uid))
 
     ]
 
@@ -32,7 +34,9 @@ def time_check(reg_Time, scrim_id):
     for thread in threads:
         thread.start()
 
-def time_match(reg_Time, scrim_id):
+def time_match(reg_Time, scrim_id,uid):
+    from Registration_soft.models import OneTimeDatas
+    data = OneTimeDatas.objects.filter(UserUniqueId = uid).all()
     while True:
         # Get current time as a `datetime.time` object without milliseconds
         now = datetime.now()
@@ -41,7 +45,7 @@ def time_match(reg_Time, scrim_id):
         if current_time == reg_Time:
             print(f"Time matched: {reg_Time} for scrim ID: {scrim_id}")
             from Registration_soft.utils.Registration import registration_pro
-            registration_pro(reg_Time,scrim_id)  # Trigger registration
+            registration_pro(reg_Time,scrim_id,uid)  # Trigger registration
             return  # Exit the thread once registration is triggered
 
         elif current_time > reg_Time:

@@ -72,20 +72,21 @@ def registration_Starter(request):
         scrims_data = ScrimsData.objects.filter(UserUniqueId = uid)
 
         for data in scrims_data:
-            button_Stat = request.POST.get(f'{data.ScrimsId}','off')
-            print(data.ScrimsId)
+            button_Stat = request.POST.get(f'{data.ScrimsUid}','off')
+            print(data.ScrimsId,button_Stat)
 
             if button_Stat == 'on':
 
                 print('init')
-                thread = threading.Thread(target=time_check,args=(data.ScrimsRegTime,data.ScrimsId))
+                # thread = threading.Thread(target=time_check,args=(data.ScrimsRegTime,data.ScrimsId))
+                thread = threading.Thread(target=time_check,args=(data,uid))
                 thread.start()
                 scrims.update({ f'{data.ScrimsName}': f'{data.ScrimsTime}'})
 
                 from Registration_soft.utils.Scrims_Data_auto import auto_data
 
                 auto_data(data.ScrimsName,data.ScrimsId,data.ScrimsTime,uid)
-                print(scrims.keys())
+                print(scrims.keys(),'this is the key')
     except Exception as e:
         scrims = e
     return render(request,'registering.html',{"scrims":scrims})
@@ -116,24 +117,6 @@ def PerfManage(request):
     except Exception as e:
         data = e
     return render(request, 'performance.html',{"PerfData":data})
-
-# def perfIN(request):
-#     if request.method == 'POST':
-#         btnID = request.POST.get('action')
-#         from Registration_soft.models import Auto_save_Data
-#         from Registration_soft.models import OneTimeDatas 
-#         uid = request.session.get('uid')
-#         pdata = OneTimeDatas.objects.filter(UserUniqueId = uid)
-#         print(btnID)
-#         # data = Auto_save_Data.objects.get(ScrimUniqueId = f'{btnID}')
-#         data = Auto_save_Data.objects.filter(UserUniqueId = uid).get(ScrimUniqueId = f'{btnID}')
-#         datas = {'scrimData':f'{data}'}
-#         print(datas)
-#         print(data.ScrimDate)
-        
-
-        
-#     return render(request,'addperfdata.html',{"scrimData":data,"plyData":pdata,"uid":btnID})
 
 
 def perfIN(request):

@@ -22,8 +22,8 @@ Scrims Registration
         <table class="table table-dark table-striped ">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Scrim Key</th>
+                    <th scope="col">S.No.</th>
+                    <th scope="col">Scrim Name</th>
                     <th scope="col">Time</th>
                     <th scope="col">Select</th>
                 </tr>
@@ -32,12 +32,12 @@ Scrims Registration
              
                  {% for scrim in scrim_data %}
                 <tr>
-                    <input type="hidden" name="{{ scrim.ScrimsId }}" value="off">
+                    <input type="hidden" name="{{ scrim.ScrimsUid }}" value="off">
                     <th scope="row">{{ forloop.counter }}</th>  <!-- Dynamically number the rows -->
                     <td>{{ scrim.ScrimsName }}</td>
-                    <td>{{ scrim.ScrimsId }}</td>
+                    <td>{{ scrim.ScrimsTime }}</td>
                     <td>
-                        <input class="form-check-input" name="{{ scrim.ScrimsId }}" type="checkbox" value="on" id="{{ scrim.ScrimsId }}">
+                        <input class="form-check-input" name="{{ scrim.ScrimsUid }}" type="checkbox" value="on" id="{{ scrim.ScrimsUid }}">
                     </td>
                 </tr>
                 {% endfor %}

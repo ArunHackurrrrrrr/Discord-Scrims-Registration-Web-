@@ -28,7 +28,7 @@
          
              {% for data in DEdata %}
             <tr>
-                <input type="hidden" name="{{ scrim.ScrimsId }}" value="off">
+                <input type="hidden" name="{{ scrim.ScrimsUid }}" value="off">
                 <th scope="row">#{{ data.ScrimPosition }}</th>  <!-- Dynamically number the rows -->
                 <td>{{ data.ScrimsName }}</td>
                 <td>{{ data.ScrimDate }}</td>
@@ -36,7 +36,7 @@
                 <td>{{ data.ScrimsOrg }}</td>
                 <td>
                   
-                    <th scope="col"><button class="btn btn-primary" name='SDEL' type="submit" value="{{data.ScrimsId}}">DELETE</button></th>
+                    <th scope="col"><button class="btn btn-primary" name='SDEL' type="submit" value="{{data.ScrimsUid}}">DELETE</button></th>
                     
                 </td>
             </tr>

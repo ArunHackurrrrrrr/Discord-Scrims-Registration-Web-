@@ -13,5 +13,6 @@ def scrimsData(uid,userid):
     return data
 def delScrimData(uid,userid):
     from Registration_soft.models import ScrimsData
-    ScrimsData.objects.filter(UserUniqueId = userid).get(ScrimsId = uid).delete()
+    ScrimsData.objects.filter(UserUniqueId = userid).get(ScrimsUid = uid).delete() 
+    #idk why this is glitching /?!
     

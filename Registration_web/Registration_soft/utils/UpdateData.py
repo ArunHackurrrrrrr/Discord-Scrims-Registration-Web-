@@ -1,4 +1,5 @@
 def AddNewData(request,uid):
+    from datetime import datetime
     if request.method == "POST":
         discord_id = request.POST.get('discord_id')
         scrim_name = request.POST.get('scrim_name')
@@ -7,6 +8,7 @@ def AddNewData(request,uid):
         start_time = request.POST.get('start_time')
         start_date = request.POST.get('scrim_date')
 
+        ScrimsUID = f'{discord_id}{datetime.now()}'
         
         from Registration_soft.models import ScrimsData
 
@@ -17,7 +19,8 @@ def AddNewData(request,uid):
             ScrimsId = discord_id,
             ScrimsOrg = org_name,
             ScrimsDate = start_date,
-            UserUniqueId = uid
+            UserUniqueId = uid,
+            ScrimsUid = ScrimsUID
         )
         ScrimDAtaUser.save()
         print(uid,'ye hia')
