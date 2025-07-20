@@ -7,10 +7,10 @@ def registration_pro(msgtime,scrim_id,uid):
         url = f"https://discord.com/api/v9/channels/{scrim_id}/messages"
     
         headers = {
-            "Authorization": "MTM0MDY2NzU5NTI2NjcxOTc2Nw.Gk5Qz6.3_Br9c_nWvxv3C2QNYI49qca4q6eOT4o3FmUwQ",    
+            "Authorization": "YOUR KEY HERE",    
             "Content-Type": "application/json"
         }
-# MTExNzgzMzkxODY5NjEyODUxMg.GvYaAS.WztT9Mv0ajNvgZHlnGNh2pzzHzZPRZmoBynSg0
+        
 
         message_content = (
         f"TEAM NAME - ahej\n\n"
